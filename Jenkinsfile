@@ -5,7 +5,8 @@ pipeline {
 
         stage('Checkout') {
             steps {
-                git 'https://github.com/Naveen0045/jenkins-cicd-demo.git'
+                git branch: 'main',
+                    url: 'https://github.com/Naveen0045/jenkins-cicd-demo.git'
             }
         }
 
@@ -18,8 +19,8 @@ pipeline {
         stage('Stop Old Container') {
             steps {
                 sh '''
-                docker stop flask-app || true
-                docker rm flask-app || true
+                    docker stop flask-app || true
+                    docker rm flask-app || true
                 '''
             }
         }
@@ -28,6 +29,16 @@ pipeline {
             steps {
                 sh 'docker run -d --name flask-app -p 5000:5000 flask-app'
             }
+        }
+    }
+
+    post {
+        success {
+            echo 'Pipeline completed successfully!'
+        }
+
+        failure {
+            echo 'Pipeline failed!'
         }
     }
 }
