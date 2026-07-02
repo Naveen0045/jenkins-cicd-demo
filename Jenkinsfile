@@ -3,7 +3,7 @@ pipeline {
 
     stages {
 
-        stage('Checkout Code') {
+        stage('Checkout') {
             steps {
                 git 'https://github.com/Naveen0045/jenkins-cicd-demo.git'
             }
@@ -26,9 +26,7 @@ pipeline {
 
         stage('Run Container') {
             steps {
-                sh '''
-                docker run -d --name flask-app -p 5000:5000 flask-app
-                '''
+                sh 'docker run -d --name flask-app -p 5000:5000 flask-app'
             }
         }
     }
